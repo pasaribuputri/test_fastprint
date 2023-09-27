@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FastPrint</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <a
+          class="navbar-brand d-flex align-items-center gap-2"
+          href="/views/home/"
+        >
+          <img
+            src="../../assets/img/printer.png"
+            alt="Logo"
+            width="30"
+            height="24"
+            class="d-inline-block align-text-top"
+          />
+          <h4>FastPrint</h4>
+        </a>
+        <ul class="nav nav-underline">
+          <li class="nav-item">
+            <a class="nav-link" href="/views/home/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/views/product/">Product</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <main>
+      <div
+        class="container d-flex align-items-center justify-content-center flex-column"
+        style="height: 50vh"
+      >
+        <p class="h1">WELCOME TO FASTPRINT</p>
+        <a href="/views/product/">
+          <p class="h5">Go to product...</p>
+        </a>
+      </div>
+    </main>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script lang="javascript">
+      const getDataApi = () => {
+          fetch("https://recruitment.fastprint.co.id/tes/api_tes_programmer", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "multipart/form-data"
+              },
+              mode: "cors",
+              body: JSON.stringify({
+                  username: "tesprogrammer210923C16",
+                  password: "92d303bd104817352903f8ffe89c7756"
+              }),
+          })
+          .then((res) => res.json())
+          .then(response => console.log(response))
+          .catch((err) => console.log(err))
+      }
+    </script>
+  </body>
+</html>

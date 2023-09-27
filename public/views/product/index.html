@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FastPrint</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <a
+          class="navbar-brand d-flex align-items-center gap-2"
+          href="/views/home/"
+        >
+          <img
+            src="../../assets/img/printer.png"
+            alt="Logo"
+            width="30"
+            height="24"
+            class="d-inline-block align-text-top"
+          />
+          <h4>FastPrint</h4>
+        </a>
+        <ul class="nav nav-underline">
+          <li class="nav-item">
+            <a class="nav-link" href="/views/home/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/views/product/">Product</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <main>
+      <div class="container p-4">
+        <div class="row mb-3">
+          <div class="col-6 row ps-4">
+            <div class="col-3">
+              <button
+                class="btn btn-primary btn-sm"
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#modalTambahProduk"
+              >
+                Add Product
+              </button>
+            </div>
+            <div class="col-9 row">
+              <div class="col-2">
+                <label for="" class="col-label-form">Status</label>
+              </div>
+              <div class="col-10">
+                <select
+                  id="filterStatus"
+                  class="form-select form-select-sm w-100"
+                  onchange="onChangeStatus()"
+                >
+                  <option value="">-</option>
+                  <option value="A1">For Sale</option>
+                  <option value="A2">Not For Sale</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 d-flex justify-content-end gap-1 pe-0">
+            <div class="w-50">
+              <input
+                type="text"
+                id="inputSearch"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <button
+              type="button"
+              class="btn btn-light btn-sm"
+              onclick="cariProduk()"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+        <div class="w-100">
+          <ul
+            class="kotak-list d-flex flex-column gap-3 p-0"
+            style="list-style: none"
+          ></ul>
+        </div>
+      </div>
+    </main>
+
+    <!-- MODAL TAMBAH PRODUK -->
+    <div
+      class="modal fade"
+      id="modalTambahProduk"
+      data-bs-backdrop="static"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5">Add Product</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label"
+                  >Product Name</label
+                >
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="inputTambahNama"
+                />
+              </div>
+              <div class="mb-3">
+                <labelclass="form-label"
+                  >Price</label
+                >
+                <input
+                  type="number"
+                  class="form-control form-control-sm"
+                  id="inputTambahHarga"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label"
+                  >Category</label
+                >
+                <select class="select-tambah-kategori form-control form-control-sm">
+                  
+                </select>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-primary" onclick="tambahProduk()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL EDIT PRODUK -->
+    <div
+      class="modal fade"
+      id="modalEditProduk"
+      data-bs-backdrop="static"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5">Edit Product</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label"
+                  >Product Name</label
+                >
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="inputEditNama"
+                />
+              </div>
+              <div class="mb-3">
+                <labelclass="form-label"
+                  >Price</label
+                >
+                <input
+                  type="number"
+                  class="form-control form-control-sm"
+                  id="inputEditHarga"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label"
+                  >Category</label
+                >
+                <select class="select-edit-kategori form-control form-control-sm">
+                  
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"
+                  >Status</label
+                >
+                <select class="select-edit-status form-control form-control-sm">
+                  <option value="A1">For Sale</option>
+                  <option value="A2">Not For Sale</option>
+                </select>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-primary" onclick="editProduk()">Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- MODAL BERHASIL -->
+    <div class="modal fade" id="modalBerhasil">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Success</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body">
+            <p class="message-berhasil"></p>
+          </div>
+          
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      var modalTambah = null;
+      var modalEdit = null;
+      var modalBerhasil = null;
+      var listKategori = [];
+      window.addEventListener("load", async () => {
+        modalTambah = new bootstrap.Modal(document.getElementById('modalTambahProduk'));
+        modalEdit = new bootstrap.Modal(document.getElementById('modalEditProduk'));
+        modalBerhasil = new bootstrap.Modal(document.getElementById('modalBerhasil'));
+        await getAllProduct();
+        await getAllKategori();
+      });
+      const getAllProduct = async () => {
+        await fetch("http://localhost:8000/api/product/getAll")
+          .then((res) => res.json())
+          .then((response) => {
+            createListProduct(response.data);
+          })
+          .catch((err) => console.log(err.message));
+      };
+
+
+      const createListProduct = (products) => {
+        if (products.length <= 0) {
+          document.querySelector(".kotak-list").textContent = "";
+          const li = document.createElement("li");
+
+          const card = document.createElement("div");
+          card.className = "card position-relative overflow-hidden";
+
+          const cardBody = document.createElement("div");
+          cardBody.className = "card-body";
+          cardBody.textContent = "Product Not Found";
+
+          card.append(cardBody);
+          li.append(card);
+          document.querySelector(".kotak-list").append(li);
+        } else {
+          document.querySelector(".kotak-list").textContent = "";
+
+          products.map((product) => {
+            const li = document.createElement("li");
+
+            const card = document.createElement("div");
+            card.className = "card position-relative overflow-hidden";
+
+            const pita = document.createElement("div");
+            pita.className = `position-absolute rounded p-1 text-white text-center ${
+              product.nama_status === "bisa dijual" ? "bg-success" : "bg-danger"
+            }`;
+            pita.style.transform = "rotate(35deg)";
+            pita.style.right = "-30px";
+            pita.style.top = "5px";
+            pita.style.fontSize = "0.5rem";
+            pita.style.width = "100px";
+            pita.textContent =
+              product.nama_status === "bisa dijual"
+                ? "For Sale"
+                : "Not For Sale";
+
+            const cardBody = document.createElement("div");
+            cardBody.className = "card-body";
+
+            const divRow = document.createElement("div");
+            divRow.className = "row";
+
+            const divCol1 = document.createElement("div");
+            divCol1.className = "col-6";
+
+            const namaProduk = document.createElement("p");
+            namaProduk.className = "h5 m-0";
+            namaProduk.textContent = product.nama_produk;
+
+            const kategoriProduk = document.createElement("p");
+            kategoriProduk.className = "mb-2";
+            kategoriProduk.style.fontSize = "1rem";
+            kategoriProduk.textContent = product.nama_kategori;
+
+            const formatter = new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            });
+            const harga = document.createElement("p");
+            harga.className = "h6";
+            harga.textContent = formatter.format(product.harga);
+
+            const divCol2 = document.createElement("div");
+            divCol2.className =
+              "col-6 d-flex justify-content-center align-items-end gap-1 flex-column";
+
+            const btnEdit = document.createElement("button");
+            btnEdit.className = "btn btn-warning text-white btn-sm w-25 me-3";
+            btnEdit.textContent = "Edit";
+            btnEdit.onclick = (() => openModalEdit(product))
+
+            const btnDelete = document.createElement("button");
+            btnDelete.className = "btn btn-danger text-white btn-sm w-25 me-3";
+            btnDelete.textContent = "Delete";
+            btnDelete.onclick = (() => deleteProduct(product.produk_id))
+
+            divCol2.append(btnEdit, btnDelete);
+            divCol1.append(namaProduk, kategoriProduk, harga);
+            divRow.append(divCol1, divCol2);
+            cardBody.append(divRow);
+            card.append(cardBody, pita);
+            li.append(card);
+            document.querySelector(".kotak-list").append(li);
+          });
+        }
+      };
+
+      const onChangeStatus = () => {
+        const status = document.querySelector("#filterStatus").value;
+        const inputan = document.querySelector("#inputSearch").value;
+        if (status || inputan) {
+          searchProduk(inputan, status);
+        } else {
+          getAllProduct();
+        }
+      };
+
+      const cariProduk = () => {
+        const status = document.querySelector("#filterStatus").value;
+        const inputan = document.querySelector("#inputSearch").value;
+        if (status || inputan) {
+          searchProduk(inputan, status);
+        } else {
+          getAllProduct();
+        }
+      };
+
+      const searchProduk = async (namaProduk, statusId) => {
+        await fetch(
+          `http://localhost:8000/api/product/getByFilter/${namaProduk}&${statusId}`
+        )
+          .then((res) => res.json())
+          .then((response) => {
+            createListProduct(response.data);
+          })
+          .catch((err) => console.log(err.message));
+      };
+
+      const getAllKategori = async () => {
+        await fetch('http://localhost:8000/api/kategori/all')
+        .then((res) => res.json())
+        .then((response) => {
+          listKategori = response.data;
+          createSelectKategori(response.data);
+        })
+        .catch((err) => console.log(err))
+      }
+
+      const createSelectKategori = (kategori) => {
+        kategori.map((kate) => {
+          const opt = document.createElement('option');
+          opt.textContent = kate.nama_kategori;
+          opt.value = kate.kategori_id;
+          document.querySelector('.select-tambah-kategori').append(opt)
+        })
+        kategori.map((kate) => {
+          const opt = document.createElement('option');
+          opt.textContent = kate.nama_kategori;
+          opt.value = kate.kategori_id;
+          document.querySelector('.select-edit-kategori').append(opt)
+        })
+      }
+
+      var produk_id = null;
+      const openModalEdit = (produk) => {
+        produk_id = produk.produk_id;
+        modalEdit.show();
+        document.getElementById('inputEditNama').value = produk.nama_produk;
+        document.getElementById('inputEditHarga').value = produk.harga;
+        document.querySelector('.select-edit-kategori').value = listKategori.find((kategori) => kategori.nama_kategori === produk.nama_kategori)?.kategori_id;
+        const listStatus = [{
+          status_id: 'A1',
+          nama_status: 'bisa dijual'
+        },
+        {
+          status_id: 'A2',
+          nama_status: 'tidak bisa dijual'
+        }
+      ]
+      document.querySelector('.select-edit-status').value = listStatus.find((status) => status.nama_status === produk.nama_status)?.status_id;
+      }
+
+      const tambahProduk = async () => {
+        await fetch('http://localhost:8000/api/product/addProduct', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nama_produk: document.getElementById('inputTambahNama').value,
+            harga: document.getElementById('inputTambahHarga').value,
+            kategori_id: document.querySelector('.select-tambah-kategori').value
+          })
+        })
+        .then((res) => res.json())
+        .then((respon) => {
+          document.querySelector('.message-berhasil').textContent = respon.message;
+          modalTambah.hide();
+          modalBerhasil.show();
+          getAllProduct();
+        })
+        .catch((err) => {
+          alert(err.message)
+        })
+      }
+
+      const editProduk = async () => {
+        await fetch('http://localhost:8000/api/product/editProduct/'+produk_id, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nama_produk: document.getElementById('inputEditNama').value,
+            harga: document.getElementById('inputEditHarga').value,
+            kategori_id: document.querySelector('.select-edit-kategori').value,
+            status_id: document.querySelector('.select-edit-status').value
+          })
+        })
+        .then((res) => res.json())
+        .then((respon) => {
+          document.querySelector('.message-berhasil').textContent = respon.message;
+          modalEdit.hide();
+          modalBerhasil.show();
+          getAllProduct();
+        })
+        .catch((err) => {
+          alert(err.message)
+        })
+      }
+
+      const deleteProduct = async (id) => {
+        fetch('http://localhost:8000/api/product/deleteProduct/'+ id, {
+          method: 'DELETE'
+        })
+        .then((res) => res.json())
+        .then((respon) => {
+          document.querySelector('.message-berhasil').textContent = respon.message;
+          modalBerhasil.show();
+          getAllProduct();
+        })
+        .catch((err) => {
+          alert(err.message)
+        })
+      }
+
+    </script>
+  </body>
+</html>
