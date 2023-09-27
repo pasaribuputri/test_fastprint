@@ -13,30 +13,47 @@ Aplikasi ini dibangun menggunakan [Express.js](https://expressjs.com/) sebagai b
 
 ## Instalasi
 1. Clone repositori ini ke Komputer Anda :
-   ``bash
+   
+   ``
    git clone https://github.com/pasaribuputri/test_fastprint.git
    ``
-2. Install dependensi 
+   
+3. Install dependensi 
+
    
   ``npm add express mariadb nodemon dotenv swagger-jsdoc swagger-ui-express``
+
+
 
 3. Import file test_fastprint.sql yang ada dalam folder helpers ke dalam database Anda.
 
 
+
 4. Tambahkan file .env-local dengan konfigurasi berikut ke dalam direktori utama proyek Anda:
     ``
-     PORT=8000
-    DB_HOST=localhost
-    DB_USER=root
-    DB_NAME=test_fastprint
+   
+       PORT=8000
+   
+       DB_HOST=localhost
+   
+       DB_USER=root
+   
+       DB_NAME=test_fastprint
+   
   ``
+
 
 ## Menjalankan Aplikasi
 
+
 ``npm start ``
+
+
 
 ## Menggunakan Aplikasi
 
+
 - Setelah menjalankan aplikasi, Anda dapat mengaksesnya melalui browser dengan alamat  http://localhost:8000/views/home/.
 
-- Untuk mengakses dokumentasi API, silakan akses http://localhost:8000/api-docs/.
+
+-  Untuk mengakses dokumentasi API, silakan akses http://localhost:8000/api-docs/.
